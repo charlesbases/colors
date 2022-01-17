@@ -50,14 +50,14 @@ func BlueSprintf(format string, a ...interface{}) string {
 	return New(F_Blue).Sprintf(format, a...)
 }
 
-// MagentaSprint .
-func MagentaSprint(a ...interface{}) string {
-	return New(F_Magenta).Sprint(a...)
+// PurpleSprint .
+func PurpleSprint(a ...interface{}) string {
+	return New(F_Purple).Sprint(a...)
 }
 
-// MagentaSprintf .
-func MagentaSprintf(format string, a ...interface{}) string {
-	return New(F_Magenta).Sprintf(format, a...)
+// PurpleSprintf .
+func PurpleSprintf(format string, a ...interface{}) string {
+	return New(F_Purple).Sprintf(format, a...)
 }
 
 // CyanSprint .

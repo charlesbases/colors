@@ -34,7 +34,7 @@ const (
 	F_Green
 	F_Yellow
 	F_Blue
-	F_Magenta
+	F_Purple
 	F_Cyan
 	F_White
 )
@@ -46,7 +46,7 @@ const (
 	F_HiGreen
 	F_HiYellow
 	F_HiBlue
-	F_HiMagenta
+	F_HiPurple
 	F_HiCyan
 	F_HiWhite
 )
@@ -58,7 +58,7 @@ const (
 	B_Green
 	B_Yellow
 	B_Blue
-	B_Magenta
+	B_Purple
 	B_Cyan
 	B_White
 )
@@ -70,7 +70,7 @@ const (
 	B_HiGreen
 	B_HiYellow
 	B_HiBlue
-	B_HiMagenta
+	B_HiPurple
 	B_HiCyan
 	B_HiWhite
 )

@@ -22,8 +22,8 @@ func TestColors(t *testing.T) {
 	fmt.Println(BlueSprint("Blue_Sprint"))
 	fmt.Println(BlueSprintf("Blue_Sprintf: %s", time.Now().Format("2006-01-02 15:04:05.000")))
 
-	fmt.Println(MagentaSprint("Magenta_Sprint"))
-	fmt.Println(MagentaSprintf("Magenta_Sprintf: %s", time.Now().Format("2006-01-02 15:04:05.000")))
+	fmt.Println(PurpleSprint("Purple_Sprint"))
+	fmt.Println(PurpleSprintf("Purple_Sprintf: %s", time.Now().Format("2006-01-02 15:04:05.000")))
 
 	fmt.Println(CyanSprint("Cyan_Sprint"))
 	fmt.Println(CyanSprintf("Cyan_Sprintf: %s", time.Now().Format("2006-01-02 15:04:05.000")))
