@@ -1,3 +1,3 @@
 module github.com/charlesbases/colors
 
-go 1.17
+go 1.20

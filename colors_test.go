@@ -6,7 +6,8 @@ import (
 	"time"
 )
 
-func TestColors(t *testing.T) {
+// print .
+func print() () {
 	fmt.Println(BlackSprint("Black_Sprint"))
 	fmt.Println(BlackSprintf("Black_Sprintf: %s", time.Now().Format("2006-01-02 15:04:05.000")))
 
@@ -30,5 +31,21 @@ func TestColors(t *testing.T) {
 
 	fmt.Println(WhiteSprint("White_Sprint"))
 	fmt.Println(WhiteSprintf("White_Sprintf: %s", time.Now().Format("2006-01-02 15:04:05.000")))
+}
 
+func TestColors(t *testing.T) {
+	print()
+}
+
+//    1879            649608 ns/op            2276 B/op         64 allocs/op
+func BenchmarkColors(b *testing.B) {
+	var bench = func(f func()) {
+		b.ResetTimer()
+		for i := 0; i < b.N; i++ {
+			f()
+		}
+		b.StopTimer()
+	}
+
+	bench(print)
 }

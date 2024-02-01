@@ -1,12 +1,15 @@
 package colors
 
 import (
+	"bytes"
 	"fmt"
-	"sort"
 	"strconv"
 	"strings"
+	"sync"
+	"unsafe"
 )
 
+// Color .
 type Color []attribute
 
 type attribute int
@@ -75,47 +78,75 @@ const (
 	B_HiWhite
 )
 
-// New .
-func New(a ...attribute) *Color {
-	var c Color = make([]attribute, 0, len(a))
-	return c.Add(a...)
+var bufferPool sync.Pool
+
+// newBuffer .
+func newBuffer() *bytes.Buffer {
+	if v := bufferPool.Get(); v != nil {
+		b := v.(*bytes.Buffer)
+		b.Reset()
+		return b
+	}
+	return bytes.NewBuffer(nil)
 }
 
-// Add .
-func (c *Color) Add(a ...attribute) *Color {
-	*c = append(*c, a...)
-	return c
+// New .
+func New(a ...attribute) Color {
+	return a
+}
+
+// sprint .
+func (c Color) sprint(s string) []byte {
+	buff := newBuffer()
+	defer bufferPool.Put(buff)
+
+	// head
+	buff.WriteString(escape)
+	buff.WriteString("[")
+	buff.WriteString(c.sequence())
+	buff.WriteString("m")
+
+	// mess
+	buff.WriteString(s)
+
+	// tail
+	buff.WriteString(escape)
+	buff.WriteString("[")
+	buff.WriteString(reset.toString())
+	buff.WriteString("m")
+
+	return buff.Bytes()
 }
 
 // Sprint .
-func (c *Color) Sprint(a ...interface{}) string {
-	return c.format() + fmt.Sprint(a...) + c.unformat()
+func (c Color) Sprint(a ...interface{}) string {
+	mess := c.sprint(fmt.Sprint(a...))
+	return *(*string)(unsafe.Pointer(&mess))
 }
 
 // Sprintf .
-func (c *Color) Sprintf(format string, a ...interface{}) string {
-	return c.format() + fmt.Sprintf(format, a...) + c.unformat()
+func (c Color) Sprintf(format string, a ...interface{}) string {
+	mess := c.sprint(fmt.Sprintf(format, a...))
+	return *(*string)(unsafe.Pointer(&mess))
 }
 
-func (c *Color) format() string {
-	return fmt.Sprintf("%s[%sm", escape, c.sequence())
-}
-
-func (c *Color) unformat() string {
-	return fmt.Sprintf("%s[%dm", escape, reset)
-}
-
-func (c *Color) sequence() string {
-	var list = make([]string, 0, len(*c))
-	for _, item := range *c {
-		list = append(list, item.string())
+// sequence .
+func (c Color) sequence() string {
+	switch len(c) {
+	case 0:
+		return ""
+	case 1:
+		return c[0].toString()
+	default:
+		var res = make([]string, 0, len(c))
+		for _, att := range c {
+			res = append(res, att.toString())
+		}
+		return strings.Join(res, ";")
 	}
-	sort.Slice(list, func(i, j int) bool {
-		return list[i] < list[j]
-	})
-	return strings.Join(list, ",")
 }
 
-func (a attribute) string() string {
+// toString .
+func (a attribute) toString() string {
 	return strconv.Itoa(int(a))
 }
