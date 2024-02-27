@@ -6,7 +6,6 @@ import (
 	"strconv"
 	"strings"
 	"sync"
-	"unsafe"
 )
 
 // Color .
@@ -14,7 +13,10 @@ type Color []attribute
 
 type attribute int
 
-const escape = "\x1b"
+const (
+	escape = "\x1b"
+	ending = escape + "[0m"
+)
 
 // Base attributes
 const (
@@ -32,50 +34,50 @@ const (
 
 // Foreground text colors
 const (
-	F_Black attribute = iota + 30
-	F_Red
-	F_Green
-	F_Yellow
-	F_Blue
-	F_Purple
-	F_Cyan
-	F_White
+	ForegroundBlack attribute = iota + 30
+	ForegroundRed
+	ForegroundGreen
+	ForegroundYellow
+	ForegroundBlue
+	ForegroundPurple
+	ForegroundCyan
+	ForegroundWhite
 )
 
 // Foreground Hi-Intensity text colors
 const (
-	F_HiBlack attribute = iota + 90
-	F_HiRed
-	F_HiGreen
-	F_HiYellow
-	F_HiBlue
-	F_HiPurple
-	F_HiCyan
-	F_HiWhite
+	ForegroundHiBlack attribute = iota + 90
+	ForegroundHiRed
+	ForegroundHiGreen
+	ForegroundHiYellow
+	ForegroundHiBlue
+	ForegroundHiPurple
+	ForegroundHiCyan
+	ForegroundHiWhite
 )
 
 // Background text colors
 const (
-	B_Black attribute = iota + 40
-	B_Red
-	B_Green
-	B_Yellow
-	B_Blue
-	B_Purple
-	B_Cyan
-	B_White
+	BackgroundBlack attribute = iota + 40
+	BackgroundRed
+	BackgroundGreen
+	BackgroundYellow
+	BackgroundBlue
+	BackgroundPurple
+	BackgroundCyan
+	BackgroundWhite
 )
 
 // Background Hi-Intensity text colors
 const (
-	B_HiBlack attribute = iota + 100
-	B_HiRed
-	B_HiGreen
-	B_HiYellow
-	B_HiBlue
-	B_HiPurple
-	B_HiCyan
-	B_HiWhite
+	BackgroundHiBlack attribute = iota + 100
+	BackgroundHiRed
+	BackgroundHiGreen
+	BackgroundHiYellow
+	BackgroundHiBlue
+	BackgroundHiPurple
+	BackgroundHiCyan
+	BackgroundHiWhite
 )
 
 var bufferPool sync.Pool
@@ -96,7 +98,7 @@ func New(a ...attribute) Color {
 }
 
 // sprint .
-func (c Color) sprint(s string) []byte {
+func (c Color) sprint(s string) string {
 	buff := newBuffer()
 	defer bufferPool.Put(buff)
 
@@ -106,28 +108,20 @@ func (c Color) sprint(s string) []byte {
 	buff.WriteString(c.sequence())
 	buff.WriteString("m")
 
-	// mess
 	buff.WriteString(s)
 
-	// tail
-	buff.WriteString(escape)
-	buff.WriteString("[")
-	buff.WriteString(reset.toString())
-	buff.WriteString("m")
-
-	return buff.Bytes()
+	buff.WriteString(ending)
+	return buff.String()
 }
 
 // Sprint .
 func (c Color) Sprint(a ...interface{}) string {
-	mess := c.sprint(fmt.Sprint(a...))
-	return *(*string)(unsafe.Pointer(&mess))
+	return c.sprint(fmt.Sprint(a...))
 }
 
 // Sprintf .
 func (c Color) Sprintf(format string, a ...interface{}) string {
-	mess := c.sprint(fmt.Sprintf(format, a...))
-	return *(*string)(unsafe.Pointer(&mess))
+	return c.sprint(fmt.Sprintf(format, a...))
 }
 
 // sequence .

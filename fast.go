@@ -2,80 +2,80 @@ package colors
 
 // BlackSprint .
 func BlackSprint(a ...interface{}) string {
-	return New(F_Black).Sprint(a...)
+	return New(ForegroundBlack).Sprint(a...)
 }
 
 // BlackSprintf .
 func BlackSprintf(format string, a ...interface{}) string {
-	return New(F_Black).Sprintf(format, a...)
+	return New(ForegroundBlack).Sprintf(format, a...)
 }
 
 // RedSprint .
 func RedSprint(a ...interface{}) string {
-	return New(F_Red).Sprint(a...)
+	return New(ForegroundRed).Sprint(a...)
 }
 
 // RedSprintf .
 func RedSprintf(format string, a ...interface{}) string {
-	return New(F_Red).Sprintf(format, a...)
+	return New(ForegroundRed).Sprintf(format, a...)
 }
 
 // GreenSprint .
 func GreenSprint(a ...interface{}) string {
-	return New(F_Green).Sprint(a...)
+	return New(ForegroundGreen).Sprint(a...)
 }
 
 // GreenSprintf .
 func GreenSprintf(format string, a ...interface{}) string {
-	return New(F_Green).Sprintf(format, a...)
+	return New(ForegroundGreen).Sprintf(format, a...)
 }
 
 // YellowSprint .
 func YellowSprint(a ...interface{}) string {
-	return New(F_Yellow).Sprint(a...)
+	return New(ForegroundYellow).Sprint(a...)
 }
 
 // YellowSprintf .
 func YellowSprintf(format string, a ...interface{}) string {
-	return New(F_Yellow).Sprintf(format, a...)
+	return New(ForegroundYellow).Sprintf(format, a...)
 }
 
 // BlueSprint .
 func BlueSprint(a ...interface{}) string {
-	return New(F_Blue).Sprint(a...)
+	return New(ForegroundBlue).Sprint(a...)
 }
 
 // BlueSprintf .
 func BlueSprintf(format string, a ...interface{}) string {
-	return New(F_Blue).Sprintf(format, a...)
+	return New(ForegroundBlue).Sprintf(format, a...)
 }
 
 // PurpleSprint .
 func PurpleSprint(a ...interface{}) string {
-	return New(F_Purple).Sprint(a...)
+	return New(ForegroundPurple).Sprint(a...)
 }
 
 // PurpleSprintf .
 func PurpleSprintf(format string, a ...interface{}) string {
-	return New(F_Purple).Sprintf(format, a...)
+	return New(ForegroundPurple).Sprintf(format, a...)
 }
 
 // CyanSprint .
 func CyanSprint(a ...interface{}) string {
-	return New(F_Cyan).Sprint(a...)
+	return New(ForegroundCyan).Sprint(a...)
 }
 
 // CyanSprintf .
 func CyanSprintf(format string, a ...interface{}) string {
-	return New(F_Cyan).Sprintf(format, a...)
+	return New(ForegroundCyan).Sprintf(format, a...)
 }
 
 // WhiteSprint .
 func WhiteSprint(a ...interface{}) string {
-	return New(F_White).Sprint(a...)
+	return New(ForegroundWhite).Sprint(a...)
 }
 
 // WhiteSprintf .
 func WhiteSprintf(format string, a ...interface{}) string {
-	return New(F_White).Sprintf(format, a...)
+	return New(ForegroundWhite).Sprintf(format, a...)
 }
